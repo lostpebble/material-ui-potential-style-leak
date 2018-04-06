@@ -25,4 +25,4 @@ Under the Memory tab, you can take snapshots.
 * Take a final snapshot
 * While selecting the final snapshot, at the top change where it says "All Objects" to "Objects allocated between Snapshot 2 and Snapshot 3"
 
-You should now see the two top offenders for the memory leak are all related to styling - the `(array)` and `Object` types as well only contain styling-related data.
+You should now see the top offenders for the memory leak are all related to styling - the `(array)` and `Object` types as well only contain styling-related data.
