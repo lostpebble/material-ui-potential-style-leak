@@ -21,7 +21,7 @@ function baseReact(sheetsRegistry, sheetsManager) {
     });
     var generateClassName = createGenerateClassName_1.default();
     return (React.createElement(JssProvider_1.default, { registry: sheetsRegistry, generateClassName: generateClassName },
-        React.createElement(styles_1.MuiThemeProvider, { theme: muiTheme },
+        React.createElement(styles_1.MuiThemeProvider, { sheetsManager: sheetsManager, theme: muiTheme },
             React.createElement(Paper_1.default, { elevation: 4 },
                 React.createElement(Typography_1.default, { variant: "headline", component: "h3" }, "This is a sheet of paper."),
                 React.createElement(Typography_1.default, { component: "p" }, "Paper can be used to build surface or other elements for your application.")))));
@@ -33,8 +33,8 @@ app.use(function (ctx) {
     var css = sheetsRegistry.toString();
     ctx.body = "\n<!DOCTYPE html>\n<html lang=\"en\">\n    <body>\n        <div id=\"root\">" + reactHtml + "</div>\n        <style id=\"jss-server-side\">" + css + "</style>\n    </body>\n</html>\n";
     ctx.status = 200;
-    sheetsRegistry.reset();
-    sheetsManager = null;
+    // sheetsRegistry.reset();
+    // sheetsManager = null;
     console.log("SERVER HIT!");
 });
 var port = 3000;

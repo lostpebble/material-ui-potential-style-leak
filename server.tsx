@@ -25,7 +25,7 @@ function baseReact(sheetsRegistry, sheetsManager) {
 
   return (
     <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
-      <MuiThemeProvider theme={muiTheme}>
+      <MuiThemeProvider sheetsManager={sheetsManager} theme={muiTheme}>
         <Paper elevation={4}>
           <Typography variant="headline" component="h3">
             This is a sheet of paper.
@@ -57,8 +57,8 @@ app.use((ctx) => {
 `;
   ctx.status = 200;
 
-  sheetsRegistry.reset();
-  sheetsManager = null;
+  // sheetsRegistry.reset();
+  // sheetsManager = null;
 
   console.log(`SERVER HIT!`);
 });
