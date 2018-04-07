@@ -11,7 +11,7 @@ var colors_1 = require("material-ui/colors");
 var createGenerateClassName_1 = require("material-ui/styles/createGenerateClassName");
 var reactDomServer = require("react-dom/cjs/react-dom-server.node.production.min");
 var app = new Koa();
-function baseReact(sheetsRegistry) {
+function baseReact(sheetsRegistry, sheetsManager) {
     var muiTheme = styles_1.createMuiTheme({
         palette: {
             primary: colors_1.green,
@@ -28,10 +28,13 @@ function baseReact(sheetsRegistry) {
 }
 app.use(function (ctx) {
     var sheetsRegistry = new jss_1.SheetsRegistry();
-    var reactHtml = reactDomServer.renderToString(baseReact(sheetsRegistry));
+    var sheetsManager = new Map();
+    var reactHtml = reactDomServer.renderToString(baseReact(sheetsRegistry, sheetsManager));
     var css = sheetsRegistry.toString();
     ctx.body = "\n<!DOCTYPE html>\n<html lang=\"en\">\n    <body>\n        <div id=\"root\">" + reactHtml + "</div>\n        <style id=\"jss-server-side\">" + css + "</style>\n    </body>\n</html>\n";
     ctx.status = 200;
+    sheetsRegistry.reset();
+    sheetsManager = null;
     console.log("SERVER HIT!");
 });
 var port = 3000;

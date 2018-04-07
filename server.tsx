@@ -12,7 +12,7 @@ const reactDomServer = require("react-dom/cjs/react-dom-server.node.production.m
 
 const app = new Koa();
 
-function baseReact(sheetsRegistry) {
+function baseReact(sheetsRegistry, sheetsManager) {
   const muiTheme = createMuiTheme({
     palette: {
       primary: green,
@@ -41,8 +41,9 @@ function baseReact(sheetsRegistry) {
 
 app.use((ctx) => {
   const sheetsRegistry = new SheetsRegistry();
+  let sheetsManager = new Map();
 
-  const reactHtml = reactDomServer.renderToString(baseReact(sheetsRegistry));
+  const reactHtml = reactDomServer.renderToString(baseReact(sheetsRegistry, sheetsManager));
   const css = sheetsRegistry.toString();
 
   ctx.body = `
@@ -55,6 +56,9 @@ app.use((ctx) => {
 </html>
 `;
   ctx.status = 200;
+
+  sheetsRegistry.reset();
+  sheetsManager = null;
 
   console.log(`SERVER HIT!`);
 });
